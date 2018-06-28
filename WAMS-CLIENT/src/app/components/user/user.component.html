@@ -1,0 +1,85 @@
+<div class="col-lg-8 users-list"  *ngIf="users && identity">
+	
+	<h1 class="h1-strong">{{title}}</h1> 
+	<div class="col-lg-4 pull-right">
+		<h3>Cantidad de Usuarios: {{users.length}}</h3>
+	</div>
+	<div class="col-lg-12 panel-default  pull-left" *ngFor= "let user of users;let i=index" >
+
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<div class="fields-users pull-left">
+					<h4 class="h4-bold">Usuario</h4>
+					<h4>{{user.username}}</h4>
+				</div>
+				
+				<div class="fields-users pull-left">					
+					<h4 class="h4-bold">Correo Electronico</h4>
+					<h4>{{user.email}}</h4>
+				</div>
+
+				<div class="fields-users pull-left" >					
+					<h4 class="h4-bold">Rol</h4>
+					<h4>{{user.role}}</h4>
+				</div>
+
+
+				<sel-edit-user (edited)="refresh($event)" *ngIf="user.show" [userInfo]="user"></sel-edit-user>
+					
+					<div class=" delete-buttom pull-right" *ngIf="identity.role == 'Admin'">
+						<a href="#myModal{{user.id}}" role ="button" class="btn btn-danger" data-toggle="modal">
+							<span class="glyphicon glyphicon-trash"></span>
+						</a>
+					</div>
+					<div class="edit-buttom pull-right" *ngIf="identity.role == 'Admin'">
+						<button  (click)="toggleVisibility(i)" *ngIf="user.show == false" role ="button" class="btn btn-primary">
+							<span class="glyphicon glyphicon-edit"></span>
+						</button>
+						<button  (click)="toggleVisibility(i)"  *ngIf="user.show == true"  role ="button" class="btn btn-primary">
+							<span class="glyphicon glyphicon-remove"></span>
+						</button>
+
+					</div>
+									    <!-- Button HTML (to Trigger Modal) -->
+
+								  <!--  <a href="#myModal" role="button" class="btn btn-large btn-primary" data-toggle="modal">Launch Demo Modal</a> -->
+								     
+
+								    <!-- Modal HTML -->
+
+								    <div id="myModal{{user.id}}" class="modal fade">
+
+								        <div class="modal-dialog">
+
+								            <div class="modal-content">
+
+								                <div class="modal-header">
+
+								                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+
+								                    <h4 class="modal-title">Confirmacion</h4>
+
+								                </div>
+
+								                <div class="modal-body">
+
+								                    <p>Deseas eliminar este usuario permanentemente?</p>
+
+								                    
+								                </div>
+
+								                <div class="modal-footer">
+
+								                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+
+								                    <button type="button" class="btn btn-danger" (click)="deleteUser(user.id)" data-dismiss="modal">Eliminar</button>
+
+								                </div>
+								            </div>
+								        </div>
+								    </div>				
+			</div>
+		</div>
+	</div>
+	
+</div>
